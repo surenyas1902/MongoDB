@@ -1,0 +1,41 @@
+[
+    {
+        "firstName":"Captain",
+        "lastName":"America",
+        "age":105,
+        "history": [
+            {
+                "disease": "cold",
+                "treatment":"done"
+            }
+        ]
+    },
+    {
+        "firstName": "Maggie",
+        "lastName": "Carter",
+        "age": 25,
+        "history": [
+            {
+                "disease": "cancer",
+                "treatment": "not"
+            }
+        ]
+    },
+    {
+        "firstName": "Bucky",
+        "lastName": "Barnes",
+        "age": 103,
+        "history": [
+            {
+                "disease": "cold",
+                "treatment": "not"
+            }
+        ]
+    }
+]
+/*
+2. db.patients.updateOne({_id:ObjectId("5f5393c5ce8e917da7bafd8d")}, {$set:{firstName: "Bucky Buchanan", age:104, history: [{"disease":"cold", "treatment":"done"}]}})
+3. db.patients.find({age:{$gt:30}})
+4. db.patients.find({"history.disease":"cold"}).pretty()
+5. db.patients.deleteMany({"history.disease":"cold"})
+*/
