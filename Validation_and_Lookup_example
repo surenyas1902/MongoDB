@@ -1,0 +1,92 @@
+use blog
+
+db.users.insertMany([{name:"Surendiran S", age:27, email:"abcd@gmail.com"}, {name:"Stephen Grider", age: 36, email:"stepheng@gmail.com"}])
+
+db.posts.insertOne({title:"My first post", text:"This is my first post. pLease like it here", tags:["new","tech"], creator: ObjectId("60c84c6d28668a35b2f4c672"), comments:[{text:"I like this post", author:ObjectId("60c84c6d28668a35b2f4c673")}]})
+
+/* Schema Validation in Mongodb - Create Validation while creating collection*/
+
+db.createCollection("posts", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["title","text","creator","comments"],
+      properties: {
+          title: {
+              bsonType: "string",
+              description:"Must be string and is required"
+          },
+          text: {
+              bsonType: "string",
+              description:"must be string and is required"
+          },
+          creator: {
+              bsonType:"objectId",
+              description:"Must be a valid ObjectId and is required"
+          },
+          comments: {
+              bsonType: "array",
+              description:"Must be array and is required",
+              items: {
+                  bsonType: "object",
+                  required: ["text","author"],
+                  properties: {
+                      text: {
+                          bsonType:"string",
+                          description:"Must be a string and is required"
+                      },
+                      author: {
+                          bsonType:"objectId",
+                          description:"Must be an object id and is required"
+                      }
+                  }
+              }
+          }
+      }
+    },
+  },
+});
+
+/* Schema Validation in Mongodb - Already presented collection*/
+db.runCommand({collMod:"posts", 
+    validator: {
+      $jsonSchema: {
+        bsonType: "object",
+        required: ["title","text","creator","comments"],
+        properties: {
+            title: {
+                bsonType: "string",
+                description:"Must be string and is required"
+            },
+            text: {
+                bsonType: "string",
+                description:"must be string and is required"
+            },
+            creator: {
+                bsonType:"objectId",
+                description:"Must be a valid ObjectId and is required"
+            },
+            comments: {
+                bsonType: "array",
+                description:"Must be array and is required",
+                items: {
+                    bsonType: "object",
+                    required: ["text","author"],
+                    properties: {
+                        text: {
+                            bsonType:"string",
+                            description:"Must be a string and is required"
+                        },
+                        author: {
+                            bsonType:"objectId",
+                            description:"Must be an object id and is required"
+                        }
+                    }
+                }
+            }
+        }
+      },
+    },
+    validationAction: "warn"
+  });
+  
